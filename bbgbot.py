@@ -1,16 +1,21 @@
 import discord
 from discord.ext import commands
 from datetime import datetime
-import os  # <-- NEU: Für Zugriff auf Secrets
+import os
 
 # === Channel-IDs ===
 EIN_AUSZAHLUNGEN_CHANNEL_ID = 1208870790934700104
 ABGABEN_CHANNEL_ID = 1256267489231376454
 
+# === Intents ===
 intents = discord.Intents.default()
-intents.message_content = True
-intents.members = True
+intents.message_content = True  # Wichtig für Nachrichteninhalte
 
+# Hinweis: members intent ist auskommentiert, weil du es im Code NICHT benutzt.
+# Wenn du später `on_member_join`, Rollen oder ähnliches brauchst, aktivier ihn.
+# intents.members = True
+
+# === Bot Setup ===
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 def get_kw():
@@ -69,4 +74,7 @@ async def abgabe(ctx, vonwem: str, betrag: int):
     await ctx.message.add_reaction("✅")
 
 # === Bot starten ===
-bot.run(os.getenv("DISCORD_TOKEN"))  # <-- Holt den Token sicher von Railway Secret
+TOKEN = os.getenv("DISCORD_TOKEN")
+if not TOKEN:
+    raise ValueError("❌ Umgebungsvariable DISCORD_TOKEN wurde nicht gesetzt!")
+bot.run(TOKEN)
