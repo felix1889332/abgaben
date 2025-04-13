@@ -7,8 +7,7 @@ import os
 
 # === Channel-IDs ===
 EIN_AUSZAHLUNGEN_CHANNEL_ID = 1208870790934700104
-ABGABEN_CHANNEL_ID = 1256267489231376454
-
+ABGABEN_CHANNEL_ID = 1208869756518535228
 # === Intents ===
 intents = discord.Intents.default()
 intents.message_content = True
