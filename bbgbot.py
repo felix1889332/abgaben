@@ -12,16 +12,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
 
-class MyClient(commands.Bot):
-    def __init__(self):
-        super().__init__(command_prefix="!", intents=intents)
-        self.tree = app_commands.CommandTree(self)
-
-    async def setup_hook(self):
-        await self.tree.sync()
-        print("✅ Slash-Commands wurden synchronisiert.")
-
-bot = MyClient()
+bot = commands.Bot(command_prefix="!", intents=intents)
 
 def get_kw():
     return datetime.now().isocalendar()[1]
@@ -29,6 +20,11 @@ def get_kw():
 @bot.event
 async def on_ready():
     print(f"✅ Bot ist online als {bot.user}")
+    try:
+        synced = await bot.tree.sync()
+        print(f"🔃 Slash-Commands synchronisiert: {len(synced)} Command(s)")
+    except Exception as e:
+        print(f"❌ Fehler beim Slash-Command-Sync: {e}")
 
 @bot.tree.command(name="einzahlen", description="Erstellt eine Einzahlung")
 @app_commands.describe(person="Wer zahlt ein?", betrag="Betrag in €", grund="Grund der Einzahlung")
