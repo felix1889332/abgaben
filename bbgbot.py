@@ -83,7 +83,7 @@ async def abheben(interaction: discord.Interaction, person: discord.Member, betr
 async def abgabe(interaction: discord.Interaction, vonwem: str, betrag: int):
     kw = get_kw()
     embed = discord.Embed(title="📤 Abgabe", color=discord.Color.light_grey(), timestamp=datetime.utcnow())
-    embed.add_field(name="👤 Von", value=vonwem, inline=False)
+    embed.add_field(name="👤 Von", value=von wem, inline=False)
     embed.add_field(name="📅 Kalenderwoche", value=f"KW {kw}", inline=False)
     embed.add_field(name="💵 Betrag", value=f"{betrag}€", inline=False)
     embed.set_footer(text=f"Erstellt von {interaction.user.display_name} am {datetime.now().strftime('%d.%m.%Y – %H:%M Uhr')}")
