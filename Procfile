@@ -1,1 +1,1 @@
-web: python bbgbot.py
+start: python bbgbot.py
