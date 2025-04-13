@@ -74,21 +74,23 @@ async def abheben(interaction: discord.Interaction, person: discord.Member, betr
     await bot.get_channel(EIN_AUSZAHLUNGEN_CHANNEL_ID).send(embed=embed)
     await interaction.response.send_message("✅ Auszahlung erfasst!", ephemeral=True)
 
+
 # === Slash-Command: Abgabe ===
 @bot.tree.command(name="abgabe", description="Wöchentliche Abgabe eintragen")
 @app_commands.describe(
     vonwem="Wer hat abgegeben?",
-    betrag="Wie viel wurde abgegeben?"
+    betrag="Wie viel wurde abgegeben?",
+    kw="Welche Kalenderwoche? (z. B. 15)"
 )
-async def abgabe(interaction: discord.Interaction, vonwem: str, betrag: int):
-    kw = get_kw()
+async def abgabe(interaction: discord.Interaction, vonwem: str, betrag: str, kw: int):
     embed = discord.Embed(title="📤 Abgabe", color=discord.Color.light_grey(), timestamp=datetime.utcnow())
     embed.add_field(name="👤 Von", value=vonwem, inline=False)
-    embed.add_field(name="📅 Kalenderwoche", value=f"KW {kw}", inline=False)
-    embed.add_field(name="💵 Betrag", value=f"{betrag}€", inline=False)
+    embed.add_field(name="📅 Kalenderwoche", value=f"**KW {kw}**", inline=False)
+    embed.add_field(name="💵 Betrag", value=betrag, inline=False)
     embed.set_footer(text=f"Erstellt von {interaction.user.display_name} am {datetime.now().strftime('%d.%m.%Y – %H:%M Uhr')}")
     await bot.get_channel(ABGABEN_CHANNEL_ID).send(embed=embed)
     await interaction.response.send_message("✅ Abgabe eingetragen!", ephemeral=True)
+
 
 # === Bot starten ===
 bot.run(os.getenv("DISCORD_TOKEN"))
